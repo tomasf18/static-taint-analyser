@@ -37,4 +37,4 @@ if __name__ == '__main__':
     tokens = imp_lex(characters)
     parser = globals()[sys.argv[2]]()
     result = parser(tokens, 0)
-    print result
+    print(result)

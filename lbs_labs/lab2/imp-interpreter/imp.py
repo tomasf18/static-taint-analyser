@@ -39,14 +39,14 @@ if __name__ == '__main__':
     filename = sys.argv[1]
     text = open(filename).read()
     tokens = imp_lex(text) # get the tokens
-    parse_result = imp_parse(tokens) # parse to produce an internal representaion of the program to recognize the instructions, what produces what, what succeeds what, abstract syntax tree ast
+    parse_result = imp_parse(tokens) # parse to produce an internal representation of the program to recognize the instructions, what produces what, what succeeds what, abstract syntax tree (ast)
     if not parse_result:
         sys.stderr.write('Parse error!\n')
         sys.exit(1)
     ast = parse_result.value
     env = {}
-    ast.eval(env) # all ast nodes have an eval that tells how that nodes executes, env is a memory mapping variable names to values, where as the program executes it updates env
-    # genetal idia of the program: receives the text, lexes it into tokens, parses the tokens into an abstract syntax tree, then evaluates the ast
+    ast.eval(env, 0) # all ast nodes have an eval that tells how that nodes executes, env is a memory mapping variable names to values, where as the program executes it updates env
+    # general idea of the program: receives the text, lexes it into tokens, parses the tokens into an abstract syntax tree, then evaluates the ast
 
     sys.stdout.write('Final variable values:\n')
     for name in env:
@@ -54,4 +54,4 @@ if __name__ == '__main__':
         
         # imp ast consists in a set o classe where each class represents a different kind of node/execution block (while, if statement, etc)in the abstract syntax tree
         
-        # THIZ IS LITERALLY COMPILERS 
+        # THIS IS LITERALLY COMPILERS 

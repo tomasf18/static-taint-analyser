@@ -42,9 +42,10 @@ class AssignStatement(Statement):
     def __repr__(self):
         return 'AssignStatement(%s, %s)' % (self.name, self.aexp)
 
-    def eval(self, env):
-        value = self.aexp.eval(env)
+    def eval(self, env, indentation):
+        value = self.aexp.eval(env, indentation + 2)
         env[self.name] = value
+        print(" " * indentation + repr(self))
 
 class CompoundStatement(Statement):
     def __init__(self, first, second):
@@ -54,9 +55,10 @@ class CompoundStatement(Statement):
     def __repr__(self):
         return 'CompoundStatement(%s, %s)' % (self.first, self.second)
 
-    def eval(self, env):
-        self.first.eval(env)
-        self.second.eval(env)
+    def eval(self, env, indentation):
+        self.first.eval(env, indentation + 2)
+        self.second.eval(env, indentation + 2)
+        print(" " * indentation + repr(self))
 
 class IfStatement(Statement):
     def __init__(self, condition, true_stmt, false_stmt):
@@ -67,14 +69,14 @@ class IfStatement(Statement):
     def __repr__(self):
         return 'IfStatement(%s, %s, %s)' % (self.condition, self.true_stmt, self.false_stmt)
 
-    def eval(self, env):
-        condition_value = self.condition.eval(env)
+    def eval(self, env, indentation):
+        condition_value = self.condition.eval(env, indentation + 2)
         if condition_value:
-            self.true_stmt.eval(env)
+            self.true_stmt.eval(env, indentation + 2)
         else:
             if self.false_stmt:
-                self.false_stmt.eval(env)
-
+                self.false_stmt.eval(env, indentation + 2)
+        print(" " * indentation + repr(self))
 class WhileStatement(Statement):
     def __init__(self, condition, body):
         self.condition = condition
@@ -83,12 +85,12 @@ class WhileStatement(Statement):
     def __repr__(self):
         return 'WhileStatement(%s, %s)' % (self.condition, self.body)
 
-    def eval(self, env):
-        condition_value = self.condition.eval(env)
+    def eval(self, env, indentation):
+        condition_value = self.condition.eval(env, indentation + 2)
         while condition_value:
-            self.body.eval(env)
-            condition_value = self.condition.eval(env)
-
+            self.body.eval(env, indentation + 2)
+            condition_value = self.condition.eval(env, indentation + 2)
+        print(" " * indentation + repr(self))
 class IntAexp(Aexp):
     def __init__(self, i):
         self.i = i
@@ -96,7 +98,8 @@ class IntAexp(Aexp):
     def __repr__(self):
         return 'IntAexp(%d)' % self.i
 
-    def eval(self, env):
+    def eval(self, env, indentation):
+        print(" " * indentation + repr(self))
         return self.i
 
 class VarAexp(Aexp):
@@ -106,7 +109,8 @@ class VarAexp(Aexp):
     def __repr__(self):
         return 'VarAexp(%s)' % self.name
 
-    def eval(self, env):
+    def eval(self, env, indentation):
+        print(" " * indentation + repr(self))
         if self.name in env:
             return env[self.name]
         else:
@@ -121,9 +125,10 @@ class BinopAexp(Aexp):
     def __repr__(self):
         return 'BinopAexp(%s, %s, %s)' % (self.op, self.left, self.right)
 
-    def eval(self, env):
-        left_value = self.left.eval(env)
-        right_value = self.right.eval(env)
+    def eval(self, env, indentation):
+        left_value = self.left.eval(env, indentation + 2)
+        right_value = self.right.eval(env, indentation + 2)
+        print(" " * indentation + repr(self))
         if self.op == '+':
             value = left_value + right_value
         elif self.op == '-':
@@ -145,9 +150,10 @@ class RelopBexp(Bexp):
     def __repr__(self):
         return 'RelopBexp(%s, %s, %s)' % (self.op, self.left, self.right)
 
-    def eval(self, env):
-        left_value = self.left.eval(env)
-        right_value = self.right.eval(env)
+    def eval(self, env, indentation):
+        left_value = self.left.eval(env, indentation + 2)
+        right_value = self.right.eval(env, indentation + 2)
+        print(" " * indentation + repr(self))
         if self.op == '<':
             value = left_value < right_value
         elif self.op == '<=':
@@ -172,9 +178,10 @@ class AndBexp(Bexp):
     def __repr__(self):
         return 'AndBexp(%s, %s)' % (self.left, self.right)
 
-    def eval(self, env):
-        left_value = self.left.eval(env)
-        right_value = self.right.eval(env)
+    def eval(self, env, indentation):
+        left_value = self.left.eval(env, indentation + 2)
+        right_value = self.right.eval(env, indentation + 2)
+        print(" " * indentation + repr(self))
         return left_value and right_value
 
 class OrBexp(Bexp):
@@ -185,9 +192,10 @@ class OrBexp(Bexp):
     def __repr__(self):
         return 'OrBexp(%s, %s)' % (self.left, self.right)
 
-    def eval(self, env):
-        left_value = self.left.eval(env)
-        right_value = self.right.eval(env)
+    def eval(self, env, indentation):
+        left_value = self.left.eval(env, indentation + 2)
+        right_value = self.right.eval(env, indentation + 2)
+        print(" " * indentation + repr(self))
         return left_value or right_value
 
 class NotBexp(Bexp):
@@ -197,6 +205,7 @@ class NotBexp(Bexp):
     def __repr__(self):
         return 'NotBexp(%s)' % self.exp
 
-    def eval(self, env):
-        value = self.exp.eval(env)
+    def eval(self, env, indentation):
+        value = self.exp.eval(env, indentation + 2)
+        print(" " * indentation + repr(self))
         return not value
