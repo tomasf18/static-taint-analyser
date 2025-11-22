@@ -8,8 +8,7 @@ class MultiLabel:
     Generalizes the Label class to be able to represent distinct labels
     corresponding to different vulnerability patterns.
     """
-
-    def __init__(self, patterns_to_track: list[Pattern]) -> None:
+    def __init__(self, patterns_to_track: list[Pattern] | None = None) -> None:
         """
         Constructor: Initializes a new, untainted MultiLabel.
         It creates an empty Label for each vulnerability pattern
@@ -17,8 +16,26 @@ class MultiLabel:
         """
         # Data structure: { "vuln_name": (Pattern, Label) }
         self.vulnerabilities: dict[str, tuple[Pattern, Label]] = {}
-        for pattern in patterns_to_track:
+        if patterns_to_track:
+            for pattern in patterns_to_track:
+                self.vulnerabilities[pattern.get_name()] = (pattern, Label())
+            
+    def add_pattern(self, pattern: Pattern) -> None:
+        """
+        Adds a new vulnerability pattern to be tracked,
+        initializing its Label as untainted.
+        """
+        if pattern.get_name() not in self.vulnerabilities:
             self.vulnerabilities[pattern.get_name()] = (pattern, Label())
+            
+    def add_patterns(self, patterns: list[Pattern]) -> None:
+        """
+        Adds multiple vulnerability patterns to be tracked,
+        initializing their Labels as untainted.
+        """
+        for pattern in patterns:
+            if pattern.get_name() not in self.vulnerabilities:
+                self.add_pattern(pattern)
 
     def add_source(self, source_name: str) -> None:
         """
@@ -39,32 +56,52 @@ class MultiLabel:
                 label.add_sanitizer(sanitizer_name)
 
     def combinor(self, other_multi_label: 'MultiLabel') -> 'MultiLabel':
-        """
-        Combinor: Returns a new MultiLabel that merges the labels from
-        'self' and 'other_multi_label' for each tracked vulnerability.
-        
-        Note: This assumes both MultiLabel objects were initialized with the
-        same set of patterns.
-        """
-        # Create a new, empty MultiLabel with the same patterns
-        current_patterns = self.get_patterns()
-        new_multi_label = MultiLabel(current_patterns)
+            """
+            Combinor: Returns a new MultiLabel that merges the labels from
+            'self' and 'other_multi_label' for each tracked vulnerability.
+            """
+            # Identify all unique pattern names involved in either label
+            self_vulns = self.vulnerabilities
+            other_vulns = other_multi_label.vulnerabilities
+            all_keys = set(self_vulns.keys()) | set(other_vulns.keys())
 
-        # Manually combine the labels for each vulnerability
-        for vuln_name, (pattern, self_label) in self.vulnerabilities.items():
-            # Get the corresponding label from the other object
-            # (This will raise a KeyError if patterns don't match)
-            other_label = other_multi_label.vulnerabilities[vuln_name][1]
+            # Create result container (initially empty)
+            new_multi_label = MultiLabel()
 
-            # Use the Label's combinor to merge them
-            combined_label = self_label.combinor(other_label)
-
-            # Store the new combined label in the new MultiLabel
-            new_multi_label.vulnerabilities[vuln_name] = (pattern, combined_label)
-
-        return new_multi_label
+            for name in all_keys:
+                if name in self_vulns and name in other_vulns:
+                    # Case 1: Both track this vulnerability -> Combine them
+                    pattern, self_label = self_vulns[name]
+                    _, other_label = other_vulns[name]
+                    
+                    combined_label = self_label.combinor(other_label)
+                    new_multi_label.vulnerabilities[name] = (pattern, combined_label)
+                
+                elif name in self_vulns:
+                    # Case 2: Only self tracks it -> Deep copy self
+                    pattern, label = self_vulns[name]
+                    new_multi_label.vulnerabilities[name] = (pattern, copy.deepcopy(label))
+                
+                else:
+                    # Case 3: Only other tracks it -> Deep copy other
+                    pattern, label = other_vulns[name]
+                    new_multi_label.vulnerabilities[name] = (pattern, copy.deepcopy(label))
+            
+            return new_multi_label
 
     # --- Selectors ---
+    
+    def get_patterns_labels(self) -> list[tuple[Pattern, Label]]:
+        """Selector for the list of (Pattern, Label) tuples being tracked."""
+        return list(self.vulnerabilities.values())
+    
+    def set_vulnerability_label(self, vulnerability_name: str, label: Label) -> None:
+        """Setter for updating the Label of a specific vulnerability."""
+        if vulnerability_name in self.vulnerabilities:
+            pattern = self.vulnerabilities[vulnerability_name][0]
+            self.vulnerabilities[vulnerability_name] = (pattern, label)
+        else:
+            print(f"Vulnerability '{vulnerability_name}' is not being tracked.")
 
     def get_patterns(self) -> list[Pattern]:
         """Selector for the list of patterns being tracked."""
@@ -111,13 +148,19 @@ if __name__ == "__main__":
         sink_names={"mysql_query"},
         sanitizer_names={"mysql_escape"},
     )
+    
+    # label assigned to variable $a, $b, $c and $d initialized to None
+    label_a = MultiLabel()
+    label_b = MultiLabel()
+    label_c = MultiLabel()
+    label_d = MultiLabel()
 
     all_patterns = [xss_pattern, sqli_pattern]
 
     # 2. Simulate variable '$a' getting $_GET
     # $a = $_GET['user'];
     print("--- $a = $_GET['user']; ---")
-    label_a = MultiLabel(all_patterns)
+    label_a = label_a.combinor(MultiLabel(all_patterns))
     label_a.add_source("$_GET") # '$_GET' is a source for BOTH patterns
     print(label_a)
     # This correctly taints BOTH the XSS label and the SQLi label.
@@ -125,7 +168,7 @@ if __name__ == "__main__":
     # 3. Simulate variable '$b' getting $_POST
     # $b = $_POST['pass'];
     print("\n--- $b = $_POST['pass']; ---")
-    label_b = MultiLabel(all_patterns)
+    label_b = label_b.combinor(MultiLabel(all_patterns))
     label_b.add_source("$_POST") # '$_POST' is a source ONLY for SQLi
     print(label_b)
     # This correctly taints ONLY the SQLi label.

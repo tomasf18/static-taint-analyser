@@ -122,9 +122,9 @@ class Label:
                     path_strs.append("RAW")
                 else:
                     path_strs.append(f"Sanitized_by({', '.join(sorted(path))})")
-            parts.append(f"  Source='{source}': {{ {', '.join(path_strs)} }}")
+            parts.append(f"\tSource='{source}': {{ {', '.join(path_strs)} }}")
         
-        return "Label(\n" + "\n".join(parts) + "\n)"
+        return "\n\tLabel(\n\t" + "\n\t".join(parts) + "\n\t)"
 
 # --- Example Usage ---
 if __name__ == "__main__":
@@ -150,6 +150,7 @@ if __name__ == "__main__":
     # $d = $_POST['pass'];
     label_d = Label()
     label_d.add_source("$_POST")
+    
     print(f"--- Label D ---\n{label_d}")
     
     # 5. Variable 'e' combines 'c' and 'd'
