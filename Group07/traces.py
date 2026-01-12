@@ -31,6 +31,8 @@ class TracesTraversal:
         handlers = {
             'Module': self._handle_module,
             'Assign': self._handle_assign,
+            'AnnAssign': self._handle_annassign,
+            'AugAssign': self._handle_augassign,
             'Expr': self._handle_expr,
             'If': self._handle_if,
             'While': self._handle_while,
@@ -49,6 +51,46 @@ class TracesTraversal:
         """Handle Module node - analyze all statements in body."""
         body = node.get('body', [])
         return self.analyse_program(body, states, vulnerabilities)
+    
+    def _handle_augassign(self, node: dict, states: list[ExecutionState], vulnerabilities: Vulnerabilities) -> list[ExecutionState]:
+        """
+        Handle annotated assignment statements for ALL execution states.
+        e.g., z += a
+        """
+        target_node = node.get('target', {})
+        op_node = node.get('op', {})
+        value_node = node.get('value', {})
+        binop_node = {
+            "ast_type": "BinOp",
+            "left": target_node,
+            "op": op_node,
+            "right": value_node,
+            "lineno": 5,
+        }
+        assign_node = {
+            'ast_type': 'Assign',
+            'targets': [target_node],
+            'value': binop_node,
+            'lineno': node.get('lineno', 0)
+        }
+        
+        return self._handle_assign(assign_node, states, vulnerabilities)
+        
+    
+    def _handle_annassign(self, node: dict, states: list[ExecutionState], vulnerabilities: Vulnerabilities) -> list[ExecutionState]:
+        """
+        Handle annotated assignment statements for ALL execution states.
+        """
+        target_node = node.get('target', {})
+        value_node = node.get('value', {})
+        assign_node = {
+            'ast_type': 'Assign',
+            'targets': [target_node],
+            'value': value_node,
+            'lineno': node.get('lineno', 0)
+        }
+        
+        return self._handle_assign(assign_node, states, vulnerabilities)
     
     def _handle_assign(self, node: dict, states: list[ExecutionState], vulnerabilities: Vulnerabilities) -> list[ExecutionState]:
         """

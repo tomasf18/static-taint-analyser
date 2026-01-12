@@ -1,0 +1,119 @@
+{
+    "ast_type": "Module",
+    "body": [
+        {
+            "ast_type": "Assign",
+            "targets": [
+                {
+                    "ast_type": "Name",
+                    "id": "users",
+                    "ctx": {
+                        "ast_type": "Store"
+                    },
+                    "lineno": 4,
+                    "col_offset": 0,
+                    "end_lineno": 4,
+                    "end_col_offset": 5
+                }
+            ],
+            "value": {
+                "ast_type": "Call",
+                "func": {
+                    "ast_type": "Name",
+                    "id": "get_users",
+                    "ctx": {
+                        "ast_type": "Load"
+                    },
+                    "lineno": 4,
+                    "col_offset": 8,
+                    "end_lineno": 4,
+                    "end_col_offset": 17
+                },
+                "args": [],
+                "keywords": [],
+                "lineno": 4,
+                "col_offset": 8,
+                "end_lineno": 4,
+                "end_col_offset": 19
+            },
+            "type_comment": null,
+            "lineno": 4,
+            "col_offset": 0,
+            "end_lineno": 4,
+            "end_col_offset": 19
+        },
+        {
+            "ast_type": "For",
+            "target": {
+                "ast_type": "Name",
+                "id": "user",
+                "ctx": {
+                    "ast_type": "Store"
+                },
+                "lineno": 5,
+                "col_offset": 4,
+                "end_lineno": 5,
+                "end_col_offset": 8
+            },
+            "iter": {
+                "ast_type": "Name",
+                "id": "users",
+                "ctx": {
+                    "ast_type": "Load"
+                },
+                "lineno": 5,
+                "col_offset": 12,
+                "end_lineno": 5,
+                "end_col_offset": 17
+            },
+            "body": [
+                {
+                    "ast_type": "Expr",
+                    "value": {
+                        "ast_type": "Call",
+                        "func": {
+                            "ast_type": "Name",
+                            "id": "display",
+                            "ctx": {
+                                "ast_type": "Load"
+                            },
+                            "lineno": 6,
+                            "col_offset": 4,
+                            "end_lineno": 6,
+                            "end_col_offset": 11
+                        },
+                        "args": [
+                            {
+                                "ast_type": "Name",
+                                "id": "user",
+                                "ctx": {
+                                    "ast_type": "Load"
+                                },
+                                "lineno": 6,
+                                "col_offset": 12,
+                                "end_lineno": 6,
+                                "end_col_offset": 16
+                            }
+                        ],
+                        "keywords": [],
+                        "lineno": 6,
+                        "col_offset": 4,
+                        "end_lineno": 6,
+                        "end_col_offset": 17
+                    },
+                    "lineno": 6,
+                    "col_offset": 4,
+                    "end_lineno": 6,
+                    "end_col_offset": 17
+                }
+            ],
+            "orelse": [],
+            "type_comment": null,
+            "lineno": 5,
+            "col_offset": 0,
+            "end_lineno": 6,
+            "end_col_offset": 17
+        }
+    ],
+    "type_ignores": []
+}

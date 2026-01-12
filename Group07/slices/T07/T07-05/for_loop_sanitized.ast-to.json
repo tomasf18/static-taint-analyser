@@ -1,0 +1,172 @@
+{
+    "ast_type": "Module",
+    "body": [
+        {
+            "ast_type": "Assign",
+            "targets": [
+                {
+                    "ast_type": "Name",
+                    "id": "inputs",
+                    "ctx": {
+                        "ast_type": "Store"
+                    },
+                    "lineno": 4,
+                    "col_offset": 0,
+                    "end_lineno": 4,
+                    "end_col_offset": 6
+                }
+            ],
+            "value": {
+                "ast_type": "Call",
+                "func": {
+                    "ast_type": "Name",
+                    "id": "get_inputs",
+                    "ctx": {
+                        "ast_type": "Load"
+                    },
+                    "lineno": 4,
+                    "col_offset": 9,
+                    "end_lineno": 4,
+                    "end_col_offset": 19
+                },
+                "args": [],
+                "keywords": [],
+                "lineno": 4,
+                "col_offset": 9,
+                "end_lineno": 4,
+                "end_col_offset": 21
+            },
+            "type_comment": null,
+            "lineno": 4,
+            "col_offset": 0,
+            "end_lineno": 4,
+            "end_col_offset": 21
+        },
+        {
+            "ast_type": "For",
+            "target": {
+                "ast_type": "Name",
+                "id": "input",
+                "ctx": {
+                    "ast_type": "Store"
+                },
+                "lineno": 5,
+                "col_offset": 4,
+                "end_lineno": 5,
+                "end_col_offset": 9
+            },
+            "iter": {
+                "ast_type": "Name",
+                "id": "inputs",
+                "ctx": {
+                    "ast_type": "Load"
+                },
+                "lineno": 5,
+                "col_offset": 13,
+                "end_lineno": 5,
+                "end_col_offset": 19
+            },
+            "body": [
+                {
+                    "ast_type": "Assign",
+                    "targets": [
+                        {
+                            "ast_type": "Name",
+                            "id": "safe_input",
+                            "ctx": {
+                                "ast_type": "Store"
+                            },
+                            "lineno": 6,
+                            "col_offset": 4,
+                            "end_lineno": 6,
+                            "end_col_offset": 14
+                        }
+                    ],
+                    "value": {
+                        "ast_type": "Call",
+                        "func": {
+                            "ast_type": "Name",
+                            "id": "sanitize",
+                            "ctx": {
+                                "ast_type": "Load"
+                            },
+                            "lineno": 6,
+                            "col_offset": 17,
+                            "end_lineno": 6,
+                            "end_col_offset": 25
+                        },
+                        "args": [
+                            {
+                                "ast_type": "Name",
+                                "id": "input",
+                                "ctx": {
+                                    "ast_type": "Load"
+                                },
+                                "lineno": 6,
+                                "col_offset": 26,
+                                "end_lineno": 6,
+                                "end_col_offset": 31
+                            }
+                        ],
+                        "keywords": [],
+                        "lineno": 6,
+                        "col_offset": 17,
+                        "end_lineno": 6,
+                        "end_col_offset": 32
+                    },
+                    "type_comment": null,
+                    "lineno": 6,
+                    "col_offset": 4,
+                    "end_lineno": 6,
+                    "end_col_offset": 32
+                },
+                {
+                    "ast_type": "Expr",
+                    "value": {
+                        "ast_type": "Call",
+                        "func": {
+                            "ast_type": "Name",
+                            "id": "process",
+                            "ctx": {
+                                "ast_type": "Load"
+                            },
+                            "lineno": 7,
+                            "col_offset": 4,
+                            "end_lineno": 7,
+                            "end_col_offset": 11
+                        },
+                        "args": [
+                            {
+                                "ast_type": "Name",
+                                "id": "safe_input",
+                                "ctx": {
+                                    "ast_type": "Load"
+                                },
+                                "lineno": 7,
+                                "col_offset": 12,
+                                "end_lineno": 7,
+                                "end_col_offset": 22
+                            }
+                        ],
+                        "keywords": [],
+                        "lineno": 7,
+                        "col_offset": 4,
+                        "end_lineno": 7,
+                        "end_col_offset": 23
+                    },
+                    "lineno": 7,
+                    "col_offset": 4,
+                    "end_lineno": 7,
+                    "end_col_offset": 23
+                }
+            ],
+            "orelse": [],
+            "type_comment": null,
+            "lineno": 5,
+            "col_offset": 0,
+            "end_lineno": 7,
+            "end_col_offset": 23
+        }
+    ],
+    "type_ignores": []
+}

@@ -4,6 +4,7 @@ from itertools import product
 
 from astexport import export
 from pathlib import Path
+import glob
 
 class ASTUtils:
     def __init__(self):
@@ -259,42 +260,31 @@ class ASTUtils:
 #--- Example usage --- 
 if __name__ == "__main__":
     ast_utils = ASTUtils()
-    list_of_paths: list[str] = ["./slices/1-basic-flow/1a-basic-flow.py",
-                                "./slices/1-basic-flow/1b-basic-flow.py",
-                                "./slices/2-expr-binary-ops/2-expr-binary-ops.py",
-                                "./slices/3-expr/3a-expr-func-calls.py",
-                                "./slices/3-expr/3b-expr-func-calls.py",
-                                "./slices/3-expr/3c-expr-attributes.py",
-                                "./slices/3-expr/3d-expr-subscript.py",
-                                "./slices/4-conds-branching/4a-conds-branching.py",
-                                "./slices/4-conds-branching/4b-conds-branching.py",
-                                "./slices/5-loops/5a-loops-unfolding.py",
-                                "./slices/5-loops/5b-loops-unfolding.py",
-                                "./slices/5-loops/5c-loops-unfolding.py",
-                                "./slices/6-sanitization/6a-sanitization.py",
-                                "./slices/6-sanitization/6b-sanitization.py",
-                                "./slices/7-conds-implicit/7-conds-implicit.py",
-                                "./slices/8-loops-implicit/8-loops-implicit.py",
-                                "./slices/9-regions-guards/9-regions-guards.py",
-                                ]
+    base_dir = Path(__file__).parent
+    slices_dir = base_dir / "slices"
+    
+    py_files = []
+
+    # Collect T07 cases once (not once per i)
+    py_files.extend(glob.glob(f"{slices_dir}/T07/*/*.py"))
     
     # Get filename: file_path.name  -> "1a-basic-flow.py"
     # Get stem (no extension): file_path.stem  -> "1a-basic-flow"
     # Get parent directory: file_path.parent  -> "slices/1-basic-flow"
     # Get category (e.g., "1-basic-flow"): file_path.parent.name  -> "1-basic-flow"
 
-    for path in list_of_paths:
+    for path in py_files:
         print(f"Analysing: {path} ...\n")
         file_path = Path(path)
         code = ast_utils.read_python_file(file_path)
         ast_dict = ast_utils.generate_ast(code)
         ast_utils.save_ast_to_json_file(ast_dict, Path(f"{file_path.parent}/{file_path.stem}.ast-to.json"))
     
-    # print traces of list_of_paths[6]
-    file_path = Path(list_of_paths[10])
-    code = ast_utils.read_python_file(file_path)
-    ast_dict = ast_utils.generate_ast(code)
+    # # print traces of py_files[6]
+    # file_path = Path(py_files[10])
+    # code = ast_utils.read_python_file(file_path)
+    # ast_dict = ast_utils.generate_ast(code)
     
-    ast_utils.print_traces(ast_dict, 5)
+    # ast_utils.print_traces(ast_dict, 5)
 
     
