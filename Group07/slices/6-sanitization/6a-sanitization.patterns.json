@@ -5,8 +5,14 @@
             "b"
         ],
         "sanitizers": [
-            "c",
-            "e"
+            [
+                "c",
+                "show"
+            ],
+            [
+                "e",
+                "omit"
+            ]
         ],
         "sinks": [
             "z"
@@ -19,8 +25,14 @@
             "b"
         ],
         "sanitizers": [
-            "c",
-            "e"
+            [
+                "c",
+                "show"
+            ],
+            [
+                "e",
+                "omit"
+            ]
         ],
         "sinks": [
             "d"

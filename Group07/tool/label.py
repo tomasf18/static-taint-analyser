@@ -3,7 +3,8 @@ import copy
 class Label:
 
     def __init__(self) -> None:
-        # Structure: { 'source_name': [ (line, path_tuple), (line, path_tuple) ] }
+        # Structure: { 'source_name': [ ((line, col), ((san1, line), (san2, line), ...)), ((line, col), () ] }
+                                        # flow untained w/ 2 sanitizers in the path        # flow tainted
         # This tracks each unique (line, path) combination
         self.flows: dict[str, list[tuple]] = {}
 

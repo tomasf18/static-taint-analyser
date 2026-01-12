@@ -5,7 +5,10 @@
             "b"
         ],
         "sanitizers": [
-            "s"
+            [
+                "s",
+                "omit"
+            ]
         ],
         "sinks": [
             "w",

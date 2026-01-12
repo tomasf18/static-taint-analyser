@@ -36,22 +36,40 @@ class Vulnerabilities:
             if flow_type == "implicit" and not pattern.is_implicit():
                 print(f"[DEBUG] Skipping implicit flow for pattern '{pattern.get_name()}' (implicit_flows=False)")
                 continue
-
-            self._record_pattern_discovery(pattern.get_name())
-            self._process_flows_for_pattern(pattern.get_name(), label.get_flows(), sink_name, sink_line_number, sink_col_number, flow_type)
+            
+            self._process_flows_for_pattern(pattern, label.get_flows(), sink_name, sink_line_number, sink_col_number, flow_type)
 
     def _record_pattern_discovery(self, vuln_name: str) -> None:
         """Record the discovery order of a pattern."""
         if vuln_name not in self.pattern_order:
             self.pattern_order.append(vuln_name)
 
-    def _process_flows_for_pattern(self, vuln_name: str, flows_dict: dict, sink_name: str, sink_line: int, sink_col: int, flow_type: str) -> None:
+    def _process_flows_for_pattern(self, pattern: Pattern, flows_dict: dict, sink_name: str, sink_line: int, sink_col: int, flow_type: str) -> None:
         """Process all flows for a given vulnerability pattern."""
         for source_name, linecol_path_list in flows_dict.items():
             paths_by_source_line = self._group_paths_by_source_line(linecol_path_list)
 
             for (source_line, source_col), paths in paths_by_source_line.items():
-                self._add_vulnerability_if_new(vuln_name, source_name, source_line, source_col, sink_name, sink_line, sink_col, paths, flow_type)
+                paths_without_sanitizers_to_omit = set()
+                for path in paths:
+                    print("TESTING PATH: ", path)
+                    if len(path) == 0:
+                        paths_without_sanitizers_to_omit.add(path)
+                    else:
+                        filtered_source_path = set()
+                        for (sanitizer_name, line) in path: # (sanitizer_name, line), i.e., it's not a RAW flow
+                            if pattern.show_sanitizer(sanitizer_name):
+                                filtered_source_path.add((sanitizer_name, line)) 
+                        filtered_source_path = tuple(filtered_source_path)
+                        if len(filtered_source_path) > 0:
+                            paths_without_sanitizers_to_omit.add(filtered_source_path) # otherwise all paths are to omit
+
+                paths_without_sanitizers_to_omit = tuple(paths_without_sanitizers_to_omit)
+                if len(paths_without_sanitizers_to_omit) == 0:
+                    continue
+                    
+                self._record_pattern_discovery(pattern.get_name())
+                self._add_vulnerability_if_new(pattern.get_name(), source_name, source_line, source_col, sink_name, sink_line, sink_col, paths_without_sanitizers_to_omit, flow_type)
 
     def _group_paths_by_source_line(self, linecol_path_list: list) -> dict:
         """
@@ -67,7 +85,7 @@ class Vulnerabilities:
         return paths_by_line
 
     def _add_vulnerability_if_new(self, vuln_name: str, source_name: str, source_line: int, source_col: int, sink_name: str,
-                                  sink_line: int, sink_col: int, paths: list, flow_type: str) -> None:
+                                  sink_line: int, sink_col: int, paths: tuple, flow_type: str) -> None:
         """Add a vulnerability if it doesn't already exist, or merge flows if it does."""
         key = (vuln_name, source_name, source_line, source_col, sink_name, sink_line, sink_col)
         paths_without_duplicates = self._deduplicate_within_paths(paths)
@@ -84,7 +102,7 @@ class Vulnerabilities:
             numbered_vuln_name = self._generate_numbered_vuln_name(vuln_name)
             self.detected_vulnerabilities[key] = (numbered_vuln_name, new_flows)
 
-    def _deduplicate_within_paths(self, paths: list) -> list:
+    def _deduplicate_within_paths(self, paths: tuple) -> list:
         """Remove duplicate items within each path while preserving order."""
         deduplicated = []
         for path in paths:

@@ -11,7 +11,7 @@ class Pattern:
         vulnerability_name: str,
         sources: set[str],
         sink_names: set[str],
-        sanitizer_names: set[str],
+        sanitizers: list[str],
         implicit_flows: str
     ) -> None:
         """
@@ -22,7 +22,9 @@ class Pattern:
         self.vulnerability_name = vulnerability_name
         self.sources = sources
         self.sink_names = sink_names
-        self.sanitizer_names = sanitizer_names
+        self.sanitizers = sanitizers
+        self.sanitizers_dict = {sanitizer[0]: sanitizer[1] for sanitizer in sanitizers}
+        self.sanitizer_names = set(self.sanitizers_dict.keys())
         self.implicit_flows = implicit_flows.lower() == "yes"
 
     def is_sink(self, name: str) -> bool:
@@ -42,6 +44,9 @@ class Pattern:
         Tests if a given name is a sanitizer for this pattern.
         """
         return name in self.sanitizer_names
+    
+    def show_sanitizer(self, name: str) -> bool:
+        return self.sanitizers_dict[name] == "show"
 
     def is_implicit(self) -> bool:
         """
@@ -74,7 +79,7 @@ class Pattern:
             f"  name='{self.vulnerability_name}', \n"
             f"  sources={self.sources}, \n"
             f"  sinks={self.sink_names}, \n"
-            f"  sanitizers={self.sanitizer_names}\n)"
+            f"  sanitizers={self.sanitizers}\n)"
         )
     
     def __eq__(self, other):
@@ -96,6 +101,6 @@ class Pattern:
             vulnerability_name=self.vulnerability_name,
             sources=set(self.sources),
             sink_names=set(self.sink_names),
-            sanitizer_names=set(self.sanitizer_names),
+            sanitizers=self.sanitizers,
             implicit_flows=("yes" if self.implicit_flows else "no")
         )

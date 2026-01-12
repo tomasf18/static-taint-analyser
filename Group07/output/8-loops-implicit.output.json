@@ -36,53 +36,5 @@
                 []
             ]
         ]
-    },
-    {
-        "vulnerability": "A_3",
-        "source": [
-            "i",
-            3,
-            6
-        ],
-        "sink": [
-            "w",
-            6,
-            0
-        ],
-        "flows": [
-            [
-                "implicit",
-                [
-                    [
-                        "s",
-                        6
-                    ]
-                ]
-            ]
-        ]
-    },
-    {
-        "vulnerability": "A_4",
-        "source": [
-            "b",
-            1,
-            4
-        ],
-        "sink": [
-            "w",
-            6,
-            0
-        ],
-        "flows": [
-            [
-                "implicit",
-                [
-                    [
-                        "s",
-                        6
-                    ]
-                ]
-            ]
-        ]
     }
 ]
