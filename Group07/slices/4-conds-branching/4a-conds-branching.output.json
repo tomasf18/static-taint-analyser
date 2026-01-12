@@ -3,11 +3,13 @@
         "vulnerability": "B_1",
         "source": [
             "d",
-            6
+            6,
+            12
         ],
         "sink": [
             "c",
-            6
+            6,
+            8
         ],
         "flows": [
             [
@@ -19,12 +21,14 @@
     {
         "vulnerability": "B_2",
         "source": [
-            "a",
-            7
+            "c",
+            7,
+            5
         ],
         "sink": [
             "e",
-            7
+            7,
+            0
         ],
         "flows": [
             [
@@ -37,11 +41,13 @@
         "vulnerability": "B_3",
         "source": [
             "d",
-            6
+            6,
+            12
         ],
         "sink": [
             "e",
-            7
+            7,
+            0
         ],
         "flows": [
             [
@@ -53,12 +59,14 @@
     {
         "vulnerability": "B_4",
         "source": [
-            "c",
-            7
+            "a",
+            7,
+            2
         ],
         "sink": [
             "e",
-            7
+            7,
+            0
         ],
         "flows": [
             [
@@ -71,11 +79,13 @@
         "vulnerability": "A_1",
         "source": [
             "f",
-            4
+            4,
+            12
         ],
         "sink": [
             "e",
-            7
+            7,
+            0
         ],
         "flows": [
             [
@@ -87,12 +97,14 @@
     {
         "vulnerability": "A_2",
         "source": [
-            "a",
-            7
+            "c",
+            7,
+            5
         ],
         "sink": [
             "e",
-            7
+            7,
+            0
         ],
         "flows": [
             [
@@ -104,12 +116,14 @@
     {
         "vulnerability": "A_3",
         "source": [
-            "c",
-            7
+            "a",
+            7,
+            2
         ],
         "sink": [
             "e",
-            7
+            7,
+            0
         ],
         "flows": [
             [
@@ -118,5 +132,4 @@
             ]
         ]
     }
-] 
-
+]

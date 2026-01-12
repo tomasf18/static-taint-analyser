@@ -3,11 +3,13 @@
         "vulnerability": "C_1",
         "source": [
             "b",
+            4,
             4
         ],
         "sink": [
             "e",
-            7
+            7,
+            0
         ],
         "flows": [
             [
@@ -29,11 +31,13 @@
         "vulnerability": "B_1",
         "source": [
             "b",
+            4,
             4
         ],
         "sink": [
             "c",
-            8
+            8,
+            4
         ],
         "flows": [
             [
@@ -50,11 +54,13 @@
         "vulnerability": "B_2",
         "source": [
             "b",
+            4,
             4
         ],
         "sink": [
             "v",
-            11
+            11,
+            8
         ],
         "flows": [
             [
@@ -71,11 +77,13 @@
         "vulnerability": "B_3",
         "source": [
             "x",
-            9
+            9,
+            7
         ],
         "sink": [
             "c",
-            8
+            8,
+            4
         ],
         "flows": [
             [
@@ -88,11 +96,13 @@
         "vulnerability": "A_1",
         "source": [
             "b",
+            4,
             4
         ],
         "sink": [
             "q",
-            13
+            13,
+            0
         ],
         "flows": [
             [
@@ -127,11 +137,13 @@
         "vulnerability": "A_2",
         "source": [
             "x",
-            9
+            9,
+            7
         ],
         "sink": [
             "q",
-            13
+            13,
+            0
         ],
         "flows": [
             [

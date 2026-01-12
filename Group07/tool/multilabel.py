@@ -37,10 +37,10 @@ class MultiLabel:
             if pattern.get_name() not in self.vulnerabilities:
                 self.add_pattern(pattern)
 
-    def add_source(self, source_name: str, line_number: int) -> None:
+    def add_source(self, source_name: str, line_number: int, col_number: int) -> None:
         for pattern, label in self.vulnerabilities.values():
             if pattern.is_source(source_name):
-                label.add_source(source_name, line_number)
+                label.add_source(source_name, line_number, col_number)
 
     def add_sanitizer(self, sanitizer_name: str, line_number: int) -> None:
         for pattern, label in self.vulnerabilities.values():

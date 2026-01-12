@@ -3,11 +3,13 @@
         "vulnerability": "A_1",
         "source": [
             "s",
-            2
+            2,
+            4
         ],
         "sink": [
             "c",
-            2
+            2,
+            0
         ],
         "flows": [
             [
@@ -20,11 +22,13 @@
         "vulnerability": "A_2",
         "source": [
             "a",
-            2
+            2,
+            6
         ],
         "sink": [
             "c",
-            2
+            2,
+            0
         ],
         "flows": [
             [
@@ -37,11 +41,13 @@
         "vulnerability": "A_3",
         "source": [
             "b",
-            1
+            1,
+            4
         ],
         "sink": [
             "c",
-            2
+            2,
+            0
         ],
         "flows": [
             [
@@ -54,11 +60,13 @@
         "vulnerability": "A_4",
         "source": [
             "s",
-            2
+            2,
+            4
         ],
         "sink": [
             "c",
-            4
+            4,
+            0
         ],
         "flows": [
             [
@@ -71,11 +79,13 @@
         "vulnerability": "A_5",
         "source": [
             "a",
-            2
+            2,
+            6
         ],
         "sink": [
             "c",
-            4
+            4,
+            0
         ],
         "flows": [
             [
@@ -88,11 +98,13 @@
         "vulnerability": "A_6",
         "source": [
             "b",
-            1
+            1,
+            4
         ],
         "sink": [
             "c",
-            4
+            4,
+            0
         ],
         "flows": [
             [
@@ -105,11 +117,13 @@
         "vulnerability": "A_7",
         "source": [
             "s",
-            2
+            2,
+            4
         ],
         "sink": [
             "c",
-            5
+            5,
+            0
         ],
         "flows": [
             [
@@ -122,11 +136,13 @@
         "vulnerability": "A_8",
         "source": [
             "a",
-            2
+            2,
+            6
         ],
         "sink": [
             "c",
-            5
+            5,
+            0
         ],
         "flows": [
             [
@@ -139,11 +155,13 @@
         "vulnerability": "A_9",
         "source": [
             "b",
-            1
+            1,
+            4
         ],
         "sink": [
             "c",
-            5
+            5,
+            0
         ],
         "flows": [
             [
@@ -156,11 +174,13 @@
         "vulnerability": "A_10",
         "source": [
             "e",
-            5
+            5,
+            2
         ],
         "sink": [
             "c",
-            5
+            5,
+            0
         ],
         "flows": [
             [
@@ -173,11 +193,13 @@
         "vulnerability": "A_11",
         "source": [
             "f",
-            5
+            5,
+            4
         ],
         "sink": [
             "c",
-            5
+            5,
+            0
         ],
         "flows": [
             [
@@ -190,11 +212,13 @@
         "vulnerability": "B_1",
         "source": [
             "s",
-            2
+            2,
+            4
         ],
         "sink": [
             "d",
-            6
+            6,
+            0
         ],
         "flows": [
             [
@@ -207,11 +231,13 @@
         "vulnerability": "B_2",
         "source": [
             "b",
-            1
+            1,
+            4
         ],
         "sink": [
             "d",
-            6
+            6,
+            0
         ],
         "flows": [
             [
@@ -224,11 +250,13 @@
         "vulnerability": "B_3",
         "source": [
             "e",
-            5
+            5,
+            2
         ],
         "sink": [
             "d",
-            6
+            6,
+            0
         ],
         "flows": [
             [
@@ -241,11 +269,13 @@
         "vulnerability": "B_4",
         "source": [
             "f",
-            5
+            5,
+            4
         ],
         "sink": [
             "d",
-            6
+            6,
+            0
         ],
         "flows": [
             [
