@@ -52,9 +52,9 @@ class MultiLabelling:
             if label.is_tainted():
                 # Indent the MultiLabel representation for readability
                 label_str = str(label).replace("\n", "\n    ")
-                parts.append(f"Variable '{var_name}': {label_str}")
+                parts.append(f"'{var_name}': {label_str}")
             else:
-                parts.append(f"Variable '{var_name}': Untainted")
+                parts.append(f"'{var_name}': Untainted")
         
         return "MultiLabelling(\n  " + "\n  ".join(parts) + "\n)"
 
@@ -65,14 +65,14 @@ if __name__ == "__main__":
     # 1. Define the vulnerability patterns to track
     xss_pattern = Pattern(
         vulnerability_name="XSS",
-        possible_sources={"$_GET"},
+        sources={"$_GET"},
         sink_names={"echo"},
         sanitizer_names={"escape_html"},
     )
     
     sqli_pattern = Pattern(
         vulnerability_name="SQL Injection",
-        possible_sources={"$_GET", "$_POST"},
+        sources={"$_GET", "$_POST"},
         sink_names={"mysql_query"},
         sanitizer_names={"mysql_escape"},
     )

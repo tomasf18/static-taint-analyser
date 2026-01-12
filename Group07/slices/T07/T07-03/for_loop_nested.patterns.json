@@ -1,0 +1,15 @@
+[
+  {
+    "vulnerability": "Data Processing",
+    "sources": [
+      "fetch_data"
+    ],
+    "sanitizers": [
+      "validate"
+    ],
+    "sinks": [
+      "process"
+    ],
+    "implicit": "no"
+  }
+]

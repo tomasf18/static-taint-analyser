@@ -111,14 +111,14 @@ if __name__ == "__main__":
     # 1. Setup Patterns
     xss_pattern = Pattern(
         vulnerability_name="XSS",
-        possible_sources={"$_GET"},
+        sources={"$_GET"},
         sink_names={"echo", "print"},
         sanitizer_names={"escape_html"},
     )
     
     sqli_pattern = Pattern(
         vulnerability_name="SQL Injection",
-        possible_sources={"$_GET", "$_POST"},
+        sources={"$_GET", "$_POST"},
         sink_names={"mysql_query"},
         sanitizer_names={"mysql_escape"},
     )

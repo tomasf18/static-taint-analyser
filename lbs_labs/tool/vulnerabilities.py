@@ -114,7 +114,6 @@ if __name__ == "__main__":
     # The policy will detect that 'escape_html' is NOT a valid sanitizer for SQLi.
     print("\n --- mysql_query($var) --- ")
     print("Analyzing sink 'mysql_query'...")
-    
     illegal_flows = policy.detect_illegal_flows("mysql_query", var_label)
     print(illegal_flows)
     

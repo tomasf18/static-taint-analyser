@@ -1,0 +1,15 @@
+[
+  {
+    "vulnerability": "User Data Leak",
+    "sources": [
+      "get_users"
+    ],
+    "sanitizers": [
+      "sanitize"
+    ],
+    "sinks": [
+      "send"
+    ],
+    "implicit": "no"
+  }
+]

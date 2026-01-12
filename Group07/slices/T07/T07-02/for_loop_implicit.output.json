@@ -1,0 +1,19 @@
+[
+    {
+        "vulnerability": "Secret Leak_1",
+        "source": [
+            "get_secret",
+            4
+        ],
+        "sink": [
+            "log",
+            7
+        ],
+        "flows": [
+            [
+                "implicit",
+                []
+            ]
+        ]
+    }
+]

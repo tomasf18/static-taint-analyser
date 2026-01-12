@@ -9,7 +9,7 @@ class Pattern:
     def __init__(
         self,
         vulnerability_name: str,
-        possible_sources: set[str],
+        sources: set[str],
         sink_names: set[str],
         sanitizer_names: set[str],
     ) -> None:
@@ -19,7 +19,7 @@ class Pattern:
         sources, sanitizers, and sinks.
         """
         self.vulnerability_name = vulnerability_name
-        self.possible_sources = possible_sources
+        self.sources = sources
         self.sink_names = sink_names
         self.sanitizer_names = sanitizer_names
 
@@ -33,7 +33,7 @@ class Pattern:
         """
         Tests if a given name is a source for this pattern.
         """
-        return name in self.possible_sources
+        return name in self.sources
 
     def is_sanitizer(self, name: str) -> bool:
         """
@@ -49,7 +49,7 @@ class Pattern:
 
     def get_sources(self) -> set[str]:
         """Selector for the set of source names."""
-        return self.possible_sources
+        return self.sources
 
     def get_sanitizers(self) -> set[str]:
         """Selector for the set of sanitizer names."""
@@ -64,7 +64,7 @@ class Pattern:
         return (
             f"Pattern(\n"
             f"  name='{self.vulnerability_name}', \n"
-            f"  sources={self.possible_sources}, \n"
+            f"  sources={self.sources}, \n"
             f"  sinks={self.sink_names}, \n"
             f"  sanitizers={self.sanitizer_names}\n)"
         )
@@ -76,7 +76,7 @@ if __name__ == "__main__":
     # 1. Define a vulnerability pattern
     sql_injection_pattern = Pattern(
         vulnerability_name="SQL Injection",
-        possible_sources={"$_GET", "$_POST", "request.form"},
+        sources={"$_GET", "$_POST", "request.form"},
         sanitizer_names={"mysql_real_escape_string", "prepare_statement"},
         sink_names={"mysql_query", "execute_sql", "system"},
     )

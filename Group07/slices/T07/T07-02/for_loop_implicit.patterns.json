@@ -1,0 +1,13 @@
+[
+  {
+    "vulnerability": "Secret Leak",
+    "sources": [
+      "get_secret"
+    ],
+    "sanitizers": [],
+    "sinks": [
+      "log"
+    ],
+    "implicit": "yes"
+  }
+]

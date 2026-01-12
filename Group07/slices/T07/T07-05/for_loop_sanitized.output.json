@@ -1,0 +1,24 @@
+[
+    {
+        "vulnerability": "Input Processing_1",
+        "source": [
+            "get_inputs",
+            4
+        ],
+        "sink": [
+            "process",
+            7
+        ],
+        "flows": [
+            [
+                "explicit",
+                [
+                    [
+                        "sanitize",
+                        6
+                    ]
+                ]
+            ]
+        ]
+    }
+]

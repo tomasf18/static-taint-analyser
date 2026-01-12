@@ -23,7 +23,7 @@ class MultiLabel:
     def add_pattern(self, pattern: Pattern) -> None:
         """
         Adds a new vulnerability pattern to be tracked,
-        initializing its Label as untainted.
+        initializing its Label as untainted (i.e., no sources).
         """
         if pattern.get_name() not in self.vulnerabilities:
             self.vulnerabilities[pattern.get_name()] = (pattern, Label())
@@ -31,7 +31,7 @@ class MultiLabel:
     def add_patterns(self, patterns: list[Pattern]) -> None:
         """
         Adds multiple vulnerability patterns to be tracked,
-        initializing their Labels as untainted.
+        initializing their Labels as untainted (i.e., no sources).
         """
         for pattern in patterns:
             if pattern.get_name() not in self.vulnerabilities:
@@ -137,14 +137,14 @@ if __name__ == "__main__":
     # 1. Define the vulnerability patterns to track
     xss_pattern = Pattern(
         vulnerability_name="XSS",
-        possible_sources={"$_GET"},
+        sources={"$_GET"},
         sink_names={"echo"},
         sanitizer_names={"escape_html"},
     )
     
     sqli_pattern = Pattern(
         vulnerability_name="SQL Injection",
-        possible_sources={"$_GET", "$_POST"},
+        sources={"$_GET", "$_POST"},
         sink_names={"mysql_query"},
         sanitizer_names={"mysql_escape"},
     )

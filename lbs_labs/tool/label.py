@@ -15,10 +15,17 @@ class Label:
         '$_GET': { frozenset(), frozenset({'escape_html'}) },
         '$_POST': { frozenset() }
     }
-    This represents info influenced by:
+    This represents that the variable which has this label was influenced by:
     - $_GET (raw, unsanitized)
     - $_GET (sanitized by 'escape_html')
     - $_POST (raw, unsanitized)
+    
+    Supposing "var" is the variable with this label, this means:
+    $var;
+    $a = $_GET['param'];            # raw from $_GET
+    $b = escape_html($a);           # sanitized from $_GET
+    $c = $_POST['other_param'];     # raw from $_POST
+    $var = $a . $b . $c;
     """
 
     def __init__(self) -> None:
@@ -33,6 +40,10 @@ class Label:
         """
         Adds a new, raw (unsanitized) flow from a given source.
         This mutates the label.
+        
+        Code Example:
+        $a = $_GET['param'];
+        a_label.add_source("$_GET")  # this adds a raw flow from $_GET
         """
         # A raw flow is represented by a path with an empty set of sanitizers.
         raw_flow_path = frozenset()
@@ -48,6 +59,16 @@ class Label:
         """
         Applies a sanitizer to all existing flows in this label.
         This mutates the label, updating every flow path.
+        
+        Code Example 1:
+        $a = sanitize($_GET['param']);
+        a_label.add_source("$_GET")  # this adds a raw flow from $_GET
+        a_label.add_sanitizer("sanitize")  # this applies the sanitizer to the existing flow
+        
+        Code Example 2:
+        $b = sanitize($a);
+        b_label = copy.deepcopy(a_label)  # start with a's label
+        b_label.add_sanitizer("sanitize")  # apply the sanitizer to all of a's flows
         """
         new_flows: dict[str, set[frozenset[str]]] = {}
         for source, paths in self.flows.items():
@@ -76,8 +97,12 @@ class Label:
         return set(self.flows.keys())
 
     def is_tainted(self) -> bool:
-        """Helper selector to check if the label is tainted at all, by checking if any source exists associated with this label/variable."""
-        return bool(self.flows)
+        """Check if the label has any unsanitized (raw) flows."""
+        for paths in self.flows.values():
+            # A raw flow is represented by an empty frozenset
+            if frozenset() in paths:  # Has at least one raw path
+                return True
+        return False
 
     def is_tainted_by(self, source_name: str) -> bool:
         """Helper selector to check if tainted by a specific source."""
