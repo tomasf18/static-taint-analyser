@@ -12,6 +12,7 @@ class ExecutionState:
         self.policy = policy
         self.pc = pc if pc is not None else []
         self.pc_multilabelling = MultiLabelling()
+        self.scope_level = 0
 
     def current_pc(self) -> MultiLabel:
         """Return the combined PC from the entire stack."""
@@ -34,6 +35,7 @@ class ExecutionState:
             copy.deepcopy(self.policy),
             copy.deepcopy(self.pc),
         )
+        new_state.scope_level = self.scope_level
         new_state.pc_multilabelling = self.pc_multilabelling.get_deepcopy()
         return new_state
     
