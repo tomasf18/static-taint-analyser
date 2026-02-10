@@ -1,0 +1,232 @@
+{
+    "ast_type": "Module",
+    "body": [
+        {
+            "ast_type": "Assign",
+            "targets": [
+                {
+                    "ast_type": "Name",
+                    "id": "a",
+                    "ctx": {
+                        "ast_type": "Store"
+                    },
+                    "lineno": 1,
+                    "col_offset": 0,
+                    "end_lineno": 1,
+                    "end_col_offset": 1
+                }
+            ],
+            "value": {
+                "ast_type": "Call",
+                "func": {
+                    "ast_type": "Name",
+                    "id": "b",
+                    "ctx": {
+                        "ast_type": "Load"
+                    },
+                    "lineno": 1,
+                    "col_offset": 4,
+                    "end_lineno": 1,
+                    "end_col_offset": 5
+                },
+                "args": [],
+                "keywords": [],
+                "lineno": 1,
+                "col_offset": 4,
+                "end_lineno": 1,
+                "end_col_offset": 7
+            },
+            "type_comment": null,
+            "lineno": 1,
+            "col_offset": 0,
+            "end_lineno": 1,
+            "end_col_offset": 7
+        },
+        {
+            "ast_type": "Assign",
+            "targets": [
+                {
+                    "ast_type": "Name",
+                    "id": "c",
+                    "ctx": {
+                        "ast_type": "Store"
+                    },
+                    "lineno": 2,
+                    "col_offset": 0,
+                    "end_lineno": 2,
+                    "end_col_offset": 1
+                }
+            ],
+            "value": {
+                "ast_type": "Call",
+                "func": {
+                    "ast_type": "Name",
+                    "id": "s",
+                    "ctx": {
+                        "ast_type": "Load"
+                    },
+                    "lineno": 2,
+                    "col_offset": 4,
+                    "end_lineno": 2,
+                    "end_col_offset": 5
+                },
+                "args": [
+                    {
+                        "ast_type": "Constant",
+                        "value": "ola",
+                        "kind": null,
+                        "lineno": 2,
+                        "col_offset": 6,
+                        "end_lineno": 2,
+                        "end_col_offset": 11
+                    },
+                    {
+                        "ast_type": "Name",
+                        "id": "a",
+                        "ctx": {
+                            "ast_type": "Load"
+                        },
+                        "lineno": 2,
+                        "col_offset": 13,
+                        "end_lineno": 2,
+                        "end_col_offset": 14
+                    }
+                ],
+                "keywords": [],
+                "lineno": 2,
+                "col_offset": 4,
+                "end_lineno": 2,
+                "end_col_offset": 15
+            },
+            "type_comment": null,
+            "lineno": 2,
+            "col_offset": 0,
+            "end_lineno": 2,
+            "end_col_offset": 15
+        },
+        {
+            "ast_type": "Assign",
+            "targets": [
+                {
+                    "ast_type": "Name",
+                    "id": "f",
+                    "ctx": {
+                        "ast_type": "Store"
+                    },
+                    "lineno": 3,
+                    "col_offset": 0,
+                    "end_lineno": 3,
+                    "end_col_offset": 1
+                }
+            ],
+            "value": {
+                "ast_type": "Call",
+                "func": {
+                    "ast_type": "Name",
+                    "id": "e",
+                    "ctx": {
+                        "ast_type": "Load"
+                    },
+                    "lineno": 3,
+                    "col_offset": 4,
+                    "end_lineno": 3,
+                    "end_col_offset": 5
+                },
+                "args": [
+                    {
+                        "ast_type": "BinOp",
+                        "left": {
+                            "ast_type": "BinOp",
+                            "left": {
+                                "ast_type": "BinOp",
+                                "left": {
+                                    "ast_type": "Name",
+                                    "id": "c",
+                                    "ctx": {
+                                        "ast_type": "Load"
+                                    },
+                                    "lineno": 3,
+                                    "col_offset": 6,
+                                    "end_lineno": 3,
+                                    "end_col_offset": 7
+                                },
+                                "op": {
+                                    "ast_type": "Add"
+                                },
+                                "right": {
+                                    "ast_type": "Constant",
+                                    "value": "oi",
+                                    "kind": null,
+                                    "lineno": 3,
+                                    "col_offset": 10,
+                                    "end_lineno": 3,
+                                    "end_col_offset": 14
+                                },
+                                "lineno": 3,
+                                "col_offset": 6,
+                                "end_lineno": 3,
+                                "end_col_offset": 14
+                            },
+                            "op": {
+                                "ast_type": "Add"
+                            },
+                            "right": {
+                                "ast_type": "Name",
+                                "id": "d",
+                                "ctx": {
+                                    "ast_type": "Load"
+                                },
+                                "lineno": 3,
+                                "col_offset": 17,
+                                "end_lineno": 3,
+                                "end_col_offset": 18
+                            },
+                            "lineno": 3,
+                            "col_offset": 6,
+                            "end_lineno": 3,
+                            "end_col_offset": 18
+                        },
+                        "op": {
+                            "ast_type": "Add"
+                        },
+                        "right": {
+                            "ast_type": "Constant",
+                            "value": "hi",
+                            "kind": null,
+                            "lineno": 3,
+                            "col_offset": 21,
+                            "end_lineno": 3,
+                            "end_col_offset": 25
+                        },
+                        "lineno": 3,
+                        "col_offset": 6,
+                        "end_lineno": 3,
+                        "end_col_offset": 25
+                    },
+                    {
+                        "ast_type": "Name",
+                        "id": "a",
+                        "ctx": {
+                            "ast_type": "Load"
+                        },
+                        "lineno": 3,
+                        "col_offset": 27,
+                        "end_lineno": 3,
+                        "end_col_offset": 28
+                    }
+                ],
+                "keywords": [],
+                "lineno": 3,
+                "col_offset": 4,
+                "end_lineno": 3,
+                "end_col_offset": 29
+            },
+            "type_comment": null,
+            "lineno": 3,
+            "col_offset": 0,
+            "end_lineno": 3,
+            "end_col_offset": 29
+        }
+    ],
+    "type_ignores": []
+}

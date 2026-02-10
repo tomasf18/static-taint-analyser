@@ -1,0 +1,40 @@
+[
+    {
+        "vulnerability": "A_1",
+        "source": [
+            "i",
+            3,
+            6
+        ],
+        "sink": [
+            "t",
+            5,
+            8
+        ],
+        "flows": [
+            [
+                "implicit",
+                []
+            ]
+        ]
+    },
+    {
+        "vulnerability": "A_2",
+        "source": [
+            "b",
+            1,
+            4
+        ],
+        "sink": [
+            "t",
+            5,
+            8
+        ],
+        "flows": [
+            [
+                "implicit",
+                []
+            ]
+        ]
+    }
+]

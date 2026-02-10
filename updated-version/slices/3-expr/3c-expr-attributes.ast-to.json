@@ -1,0 +1,142 @@
+{
+    "ast_type": "Module",
+    "body": [
+        {
+            "ast_type": "Assign",
+            "targets": [
+                {
+                    "ast_type": "Attribute",
+                    "value": {
+                        "ast_type": "Name",
+                        "id": "c",
+                        "ctx": {
+                            "ast_type": "Load"
+                        },
+                        "lineno": 1,
+                        "col_offset": 0,
+                        "end_lineno": 1,
+                        "end_col_offset": 1
+                    },
+                    "attr": "e",
+                    "ctx": {
+                        "ast_type": "Store"
+                    },
+                    "lineno": 1,
+                    "col_offset": 0,
+                    "end_lineno": 1,
+                    "end_col_offset": 3
+                }
+            ],
+            "value": {
+                "ast_type": "Constant",
+                "value": 0,
+                "kind": null,
+                "lineno": 1,
+                "col_offset": 6,
+                "end_lineno": 1,
+                "end_col_offset": 7
+            },
+            "type_comment": null,
+            "lineno": 1,
+            "col_offset": 0,
+            "end_lineno": 1,
+            "end_col_offset": 7
+        },
+        {
+            "ast_type": "Assign",
+            "targets": [
+                {
+                    "ast_type": "Attribute",
+                    "value": {
+                        "ast_type": "Name",
+                        "id": "a",
+                        "ctx": {
+                            "ast_type": "Load"
+                        },
+                        "lineno": 2,
+                        "col_offset": 0,
+                        "end_lineno": 2,
+                        "end_col_offset": 1
+                    },
+                    "attr": "f",
+                    "ctx": {
+                        "ast_type": "Store"
+                    },
+                    "lineno": 2,
+                    "col_offset": 0,
+                    "end_lineno": 2,
+                    "end_col_offset": 3
+                }
+            ],
+            "value": {
+                "ast_type": "BinOp",
+                "left": {
+                    "ast_type": "Call",
+                    "func": {
+                        "ast_type": "Attribute",
+                        "value": {
+                            "ast_type": "Name",
+                            "id": "b",
+                            "ctx": {
+                                "ast_type": "Load"
+                            },
+                            "lineno": 2,
+                            "col_offset": 6,
+                            "end_lineno": 2,
+                            "end_col_offset": 7
+                        },
+                        "attr": "m",
+                        "ctx": {
+                            "ast_type": "Load"
+                        },
+                        "lineno": 2,
+                        "col_offset": 6,
+                        "end_lineno": 2,
+                        "end_col_offset": 9
+                    },
+                    "args": [],
+                    "keywords": [],
+                    "lineno": 2,
+                    "col_offset": 6,
+                    "end_lineno": 2,
+                    "end_col_offset": 11
+                },
+                "op": {
+                    "ast_type": "Add"
+                },
+                "right": {
+                    "ast_type": "Attribute",
+                    "value": {
+                        "ast_type": "Name",
+                        "id": "c",
+                        "ctx": {
+                            "ast_type": "Load"
+                        },
+                        "lineno": 2,
+                        "col_offset": 14,
+                        "end_lineno": 2,
+                        "end_col_offset": 15
+                    },
+                    "attr": "e",
+                    "ctx": {
+                        "ast_type": "Load"
+                    },
+                    "lineno": 2,
+                    "col_offset": 14,
+                    "end_lineno": 2,
+                    "end_col_offset": 17
+                },
+                "lineno": 2,
+                "col_offset": 6,
+                "end_lineno": 2,
+                "end_col_offset": 17
+            },
+            "type_comment": null,
+            "lineno": 2,
+            "col_offset": 0,
+            "end_lineno": 2,
+            "end_col_offset": 17
+        }
+    ],
+    "type_ignores": []
+}

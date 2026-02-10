@@ -1,0 +1,119 @@
+[
+    {
+        "vulnerability": "A_1",
+        "source": [
+            "b",
+            1,
+            4
+        ],
+        "sink": [
+            "e",
+            2,
+            12
+        ],
+        "flows": [
+            [
+                "explicit",
+                [
+                    [
+                        "f",
+                        2
+                    ]
+                ]
+            ]
+        ]
+    },
+    {
+        "vulnerability": "A_2",
+        "source": [
+            "b",
+            1,
+            4
+        ],
+        "sink": [
+            "c",
+            2,
+            0
+        ],
+        "flows": [
+            [
+                "explicit",
+                []
+            ],
+            [
+                "explicit",
+                [
+                    [
+                        "f",
+                        2
+                    ]
+                ]
+            ]
+        ]
+    },
+    {
+        "vulnerability": "A_3",
+        "source": [
+            "b",
+            1,
+            4
+        ],
+        "sink": [
+            "e",
+            3,
+            0
+        ],
+        "flows": [
+            [
+                "explicit",
+                []
+            ],
+            [
+                "explicit",
+                [
+                    [
+                        "f",
+                        2
+                    ]
+                ]
+            ]
+        ]
+    },
+    {
+        "vulnerability": "B_1",
+        "source": [
+            "b",
+            1,
+            4
+        ],
+        "sink": [
+            "c",
+            2,
+            0
+        ],
+        "flows": [
+            [
+                "explicit",
+                [
+                    [
+                        "d",
+                        2
+                    ]
+                ]
+            ],
+            [
+                "explicit",
+                [
+                    [
+                        "e",
+                        2
+                    ],
+                    [
+                        "d",
+                        2
+                    ]
+                ]
+            ]
+        ]
+    }
+]

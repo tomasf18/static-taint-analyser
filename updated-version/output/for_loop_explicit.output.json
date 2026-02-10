@@ -1,0 +1,21 @@
+[
+    {
+        "vulnerability": "User Data Exposure_1",
+        "source": [
+            "get_users",
+            4,
+            8
+        ],
+        "sink": [
+            "display",
+            6,
+            4
+        ],
+        "flows": [
+            [
+                "explicit",
+                []
+            ]
+        ]
+    }
+]

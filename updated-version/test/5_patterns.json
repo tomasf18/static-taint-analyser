@@ -1,0 +1,92 @@
+[
+    {
+        "vulnerability": "SQL Injection",
+        "sources": [
+            "request.POST",
+            "request.GET",
+            "request.form",
+            "request.args"
+        ],
+        "sanitizers": [
+            "mogrify",
+            "quote"
+        ],
+        "sinks": [
+            "execute",
+            "raw"
+        ],
+        "implicit": "no"
+    },
+    {
+        "vulnerability": "Cross-Site Scripting (XSS)",
+        "sources": [
+            "request.GET",
+            "request.POST",
+            "request.form",
+            "request.args"
+        ],
+        "sanitizers": [
+            "html.escape",
+            "escape",
+            "escapejs"
+        ],
+        "sinks": [
+            "mark_safe",
+            "HttpResponse",
+            "Markup"
+        ],
+        "implicit": "no"
+    },
+    {
+        "vulnerability": "Server-Side Request Forgery (SSRF)",
+        "sources": [
+            "request.GET",
+            "request.POST",
+            "url_param"
+        ],
+        "sanitizers": [
+            "validate_url",
+            "urlparse"
+        ],
+        "sinks": [
+            "requests.get.get",
+            "requests.post",
+            "urlopen"
+        ],
+        "implicit": "yes"
+    },
+    {
+        "vulnerability": "Command Injection",
+        "sources": [
+            "request.GET",
+            "request.POST",
+            "request.args"
+        ],
+        "sanitizers": [
+            "shlex.quote"
+        ],
+        "sinks": [
+            "os.system",
+            "subprocess.run"
+        ],
+        "implicit": "yes"
+    },
+    {
+        "vulnerability": "Path Traversal",
+        "sources": [
+            "request.GET",
+            "request.form",
+            "request.args"
+        ],
+        "sanitizers": [
+            "os.path.basename",
+            "secure_filename"
+        ],
+        "sinks": [
+            "open",
+            "send_file",
+            "send_from_directory"
+        ],
+        "implicit": "no"
+    }
+]

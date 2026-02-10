@@ -1,0 +1,15 @@
+[
+  {
+    "vulnerability": "Input Processing",
+    "sources": [
+      "get_inputs"
+    ],
+    "sanitizers": [
+      "sanitize"
+    ],
+    "sinks": [
+      "process"
+    ],
+    "implicit": "no"
+  }
+]

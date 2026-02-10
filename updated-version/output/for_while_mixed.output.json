@@ -1,0 +1,21 @@
+[
+    {
+        "vulnerability": "User Data Leak_1",
+        "source": [
+            "get_users",
+            4,
+            8
+        ],
+        "sink": [
+            "send",
+            8,
+            8
+        ],
+        "flows": [
+            [
+                "explicit",
+                []
+            ]
+        ]
+    }
+]

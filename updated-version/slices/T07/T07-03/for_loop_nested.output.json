@@ -1,0 +1,21 @@
+[
+    {
+        "vulnerability": "Data Processing_1",
+        "source": [
+            "fetch_data",
+            4,
+            7
+        ],
+        "sink": [
+            "process",
+            7,
+            8
+        ],
+        "flows": [
+            [
+                "explicit",
+                []
+            ]
+        ]
+    }
+]
