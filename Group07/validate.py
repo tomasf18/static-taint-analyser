@@ -33,23 +33,21 @@ def is_list_of_strings(ll: list) -> bool:
 ################ INSTRUCTION FUNCTIONS ################
 #######################################################
 
-### an instruction is a list [string, int] or [string, int, int] (with column number)
+### an instruction is a list [string, int]
 def is_instruction(pp: list) -> bool:
     return isinstance(pp, list) and \
-        len(pp) in [2, 3] and \
+        len(pp) == 2 and \
         isinstance(pp[0], str) and \
-        isinstance(pp[1], int) and \
-        (len(pp) == 2 or isinstance(pp[2], int))
+        isinstance(pp[1], int)
 
 
 ### 2 instructions are equal if they match in both function name and line number, 
 # unless ignore_lines is set in which case only function name matters
-# Column number is optional and not compared
 def is_same_instruction(i1: list, i2: list) -> bool:
     if args.ignore_lines:
         return i1[0] == i2[0]
     else:
-        return i1[0] == i2[0] and i1[1] == i2[1]
+        return i1 == i2
 
 
 #######################################################
@@ -166,8 +164,8 @@ def is_pattern(json_obj) -> bool:
     <OUTPUT> ::= [ <VULNERABILITIES> ]
     <VULNERABILITIES> := "none" | <VULNERABILITY> | <VULNERABILITY>, <VULNERABILITIES>
     <VULNERABILITY> ::= { "vulnerability": "<STRING>",
-                        "source": [ "<STRING>", <INT>, <INT> ]
-                        "sink": [ "<STRING>", <INT>, <INT> ],
+                        "source": [ "<STRING>", <INT> ]
+                        "sink": [ "<STRING>", <INT> ],
                         "flows": [ <FLOWS> ] }
     <FLOWS> ::= <FLOW> | <FLOW>, <FLOWS>
     <FLOW> ::= [ <IMPEXP>, [] ] | [ <IMPEXP>, [<SANITIZERS>] ]

@@ -3,13 +3,11 @@
         "vulnerability": "A_1",
         "source": [
             "c",
-            3,
             3
         ],
         "sink": [
             "e",
-            7,
-            0
+            7
         ],
         "flows": [
             [
@@ -22,13 +20,11 @@
         "vulnerability": "A_2",
         "source": [
             "boo",
-            1,
-            6
+            1
         ],
         "sink": [
             "e",
-            7,
-            0
+            7
         ],
         "flows": [
             [
@@ -41,13 +37,11 @@
         "vulnerability": "A_3",
         "source": [
             "b",
-            1,
-            4
+            1
         ],
         "sink": [
             "e",
-            7,
-            0
+            7
         ],
         "flows": [
             [
@@ -56,4 +50,5 @@
             ]
         ]
     }
-]
+] 
+

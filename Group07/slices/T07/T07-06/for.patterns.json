@@ -5,10 +5,7 @@
             "b"
         ],
         "sanitizers": [
-            [
-                "s",
-                "show"
-            ]
+            "s"
         ],
         "sinks": [
             "q"
@@ -33,14 +30,10 @@
             "b"
         ],
         "sanitizers": [
-            [
-                "s",
-                "show"
-            ]
+            "s"
         ],
         "sinks": [
-            "e",
-            "d"
+            "e"
         ],
         "implicit": "no"
     }

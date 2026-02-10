@@ -3,19 +3,18 @@ import copy
 class Label:
 
     def __init__(self) -> None:
-        # Structure: { 'source_name': [ ((line, col), ((san1, line), (san2, line), ...)), ((line, col), () ] }
-                                        # flow untained w/ 2 sanitizers in the path        # flow tainted
+        # Structure: { 'source_name': [ (line, path_tuple), (line, path_tuple) ] }
         # This tracks each unique (line, path) combination
         self.flows: dict[str, list[tuple]] = {}
 
-    def add_source(self, source_name: str, line_number: int, col_number: int, scope: int) -> None:
+    def add_source(self, source_name: str, line_number: int) -> None:
         """Adds a new, raw (unsanitized) flow from a given source."""
         raw_flow_path = tuple()  # RAW flow represented as empty tuple
         
         if source_name not in self.flows:
             self.flows[source_name] = []
         
-        new_flow_path = ((line_number, col_number, scope), raw_flow_path)
+        new_flow_path = (line_number, raw_flow_path)
         if new_flow_path not in self.flows[source_name]:
             self.flows[source_name].append(new_flow_path)
 
@@ -23,18 +22,18 @@ class Label:
         """Applies a sanitizer to all existing flows."""
         new_flows: dict[str, list[tuple]] = {}
 
-        for source, linecolscope_path_list in self.flows.items():
-            new_source_linecolscope_path_list = []
-            for ((line, col, scope), path) in linecolscope_path_list:
+        for source, line_path_list in self.flows.items():
+            new_source_line_path_list = []
+            for (line, path) in line_path_list:
                 # Convert path to set to remove duplicates, then back to sorted tuple
                 sanitizers_set = set(path)  # Remove existing duplicates
                 sanitizers_set.add((sanitizer_name, line_no))  # Add new sanitizer
                 new_path = tuple(sanitizers_set)  # Convert back to tuple
 
-                new_flow = ((line, col, scope), new_path)
-                new_source_linecolscope_path_list.append(new_flow)
+                new_flow = (line, new_path)
+                new_source_line_path_list.append(new_flow)
 
-            new_flows[source] = new_source_linecolscope_path_list
+            new_flows[source] = new_source_line_path_list
 
         self.flows = new_flows
 
@@ -49,8 +48,8 @@ class Label:
 
     def is_tainted(self) -> bool:
         """Check if the label has any unsanitized (raw) flows."""
-        for linecolscope_path_list in self.flows.values():
-            for ((line, col, scope), path) in linecolscope_path_list:
+        for line_path_list in self.flows.values():
+            for (line, path) in line_path_list:
                 if path == tuple():  # Raw flow
                     return True
         return False
@@ -59,8 +58,8 @@ class Label:
         """Helper selector to check if tainted by a specific source."""
         if source_name not in self.flows:
             return False
-        linecolscope_path_list = self.flows[source_name]
-        for ((line, col, scope), path) in linecolscope_path_list:
+        line_path_list = self.flows[source_name]
+        for (line, path) in line_path_list:
             if path == tuple():
                 return True
         return False
@@ -71,12 +70,12 @@ class Label:
         new_label = Label()
         new_label.flows = copy.deepcopy(self.flows)
 
-        for source, other_linecolscope_path_list in other_label.get_flows().items():
+        for source, other_line_path_list in other_label.get_flows().items():
             if source not in new_label.flows: # if this label doesn't have the source yet, and the other does
-                new_label.flows[source] = copy.deepcopy(other_linecolscope_path_list)
+                new_label.flows[source] = copy.deepcopy(other_line_path_list)
             else:
                 # merge the (line, path) lists
-                for flow in other_linecolscope_path_list:
+                for flow in other_line_path_list:
                     new_label.flows[source] = list(set(new_label.flows[source]) | {flow})
         return new_label
 
@@ -84,20 +83,20 @@ class Label:
         """Provides a clean string representation for debugging."""
         parts = []
         for source in sorted(self.flows.keys()):
-            linecolscope_path_list = self.flows[source]
+            line_path_list = self.flows[source]
             # Group by line for display
-            linecol_groups = {}
-            for ((line, col, scope), path) in linecolscope_path_list:
-                if (line, col, scope) not in linecol_groups:
-                    linecol_groups[(line, col, scope)] = []
+            line_groups = {}
+            for (line, path) in line_path_list:
+                if line not in line_groups:
+                    line_groups[line] = []
                 if not path:
-                    linecol_groups[(line, col, scope)].append("RAW")
+                    line_groups[line].append("RAW")
                 else:
-                    linecol_groups[(line, col, scope)].append(f"Sanitized_by({', '.join(str(s) for s in path)})")
+                    line_groups[line].append(f"Sanitized_by({', '.join(str(s) for s in path)})")
             
-            for (line, col, scope) in sorted(linecol_groups.keys()):
-                paths_str = ', '.join(linecol_groups[(line, col, scope)])
-                parts.append(f"\tSource='{source}' (line {line}, col {col}, scope {scope}): {{ {paths_str} }}")
+            for line in sorted(line_groups.keys()):
+                paths_str = ', '.join(line_groups[line])
+                parts.append(f"\tSource='{source}' (line {line}): {{ {paths_str} }}")
         
         return "Label(\n" + "\n".join(parts) + "\n\t)"
     

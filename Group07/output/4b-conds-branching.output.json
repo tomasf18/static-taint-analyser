@@ -3,13 +3,11 @@
         "vulnerability": "B_1",
         "source": [
             "d",
-            6,
-            13
+            6
         ],
         "sink": [
             "a",
-            6,
-            4
+            6
         ],
         "flows": [
             [
@@ -22,13 +20,11 @@
         "vulnerability": "C_1",
         "source": [
             "a",
-            7,
-            2
+            7
         ],
         "sink": [
             "e",
-            7,
-            0
+            7
         ],
         "flows": [
             [
@@ -41,13 +37,11 @@
         "vulnerability": "C_2",
         "source": [
             "a",
-            6,
-            10
+            6
         ],
         "sink": [
             "e",
-            7,
-            0
+            7
         ],
         "flows": [
             [
@@ -65,13 +59,11 @@
         "vulnerability": "C_3",
         "source": [
             "d",
-            7,
-            5
+            7
         ],
         "sink": [
             "e",
-            7,
-            0
+            7
         ],
         "flows": [
             [
@@ -84,13 +76,11 @@
         "vulnerability": "C_4",
         "source": [
             "d",
-            6,
-            13
+            6
         ],
         "sink": [
             "e",
-            7,
-            0
+            7
         ],
         "flows": [
             [
@@ -108,13 +98,11 @@
         "vulnerability": "A_1",
         "source": [
             "b",
-            1,
-            4
+            1
         ],
         "sink": [
             "e",
-            7,
-            0
+            7
         ],
         "flows": [
             [
@@ -127,13 +115,11 @@
         "vulnerability": "A_2",
         "source": [
             "d",
-            6,
-            13
+            7
         ],
         "sink": [
             "e",
-            7,
-            0
+            7
         ],
         "flows": [
             [
@@ -146,13 +132,11 @@
         "vulnerability": "A_3",
         "source": [
             "d",
-            7,
-            5
+            6
         ],
         "sink": [
             "e",
-            7,
-            0
+            7
         ],
         "flows": [
             [

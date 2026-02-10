@@ -3,13 +3,11 @@
         "vulnerability": "A_1",
         "source": [
             "b",
-            1,
-            4
+            1
         ],
         "sink": [
             "e",
-            2,
-            12
+            2
         ],
         "flows": [
             [
@@ -27,19 +25,13 @@
         "vulnerability": "A_2",
         "source": [
             "b",
-            1,
-            4
+            1
         ],
         "sink": [
             "c",
-            2,
-            0
+            2
         ],
         "flows": [
-            [
-                "explicit",
-                []
-            ],
             [
                 "explicit",
                 [
@@ -48,6 +40,10 @@
                         2
                     ]
                 ]
+            ],
+            [
+                "explicit",
+                []
             ]
         ]
     },
@@ -55,19 +51,13 @@
         "vulnerability": "A_3",
         "source": [
             "b",
-            1,
-            4
+            1
         ],
         "sink": [
             "e",
-            3,
-            0
+            3
         ],
         "flows": [
-            [
-                "explicit",
-                []
-            ],
             [
                 "explicit",
                 [
@@ -76,6 +66,10 @@
                         2
                     ]
                 ]
+            ],
+            [
+                "explicit",
+                []
             ]
         ]
     },
@@ -83,24 +77,13 @@
         "vulnerability": "B_1",
         "source": [
             "b",
-            1,
-            4
+            1
         ],
         "sink": [
             "c",
-            2,
-            0
+            2
         ],
         "flows": [
-            [
-                "explicit",
-                [
-                    [
-                        "d",
-                        2
-                    ]
-                ]
-            ],
             [
                 "explicit",
                 [
@@ -113,7 +96,17 @@
                         2
                     ]
                 ]
+            ],
+            [
+                "explicit",
+                [
+                    [
+                        "d",
+                        2
+                    ]
+                ]
             ]
         ]
     }
-]
+] 
+

@@ -21,7 +21,7 @@ def process_json_file(filepath):
             vulnerability_name=entry['vulnerability'],
             sources=set(entry['sources']),
             sink_names=set(entry['sinks']),
-            sanitizers=entry['sanitizers'],
+            sanitizer_names=set(entry['sanitizers']),
             implicit_flows=entry['implicit']
         ))
         print(patterns[-1])

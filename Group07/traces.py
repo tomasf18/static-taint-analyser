@@ -31,8 +31,6 @@ class TracesTraversal:
         handlers = {
             'Module': self._handle_module,
             'Assign': self._handle_assign,
-            'AnnAssign': self._handle_annassign,
-            'AugAssign': self._handle_augassign,
             'Expr': self._handle_expr,
             'If': self._handle_if,
             'While': self._handle_while,
@@ -51,46 +49,6 @@ class TracesTraversal:
         """Handle Module node - analyze all statements in body."""
         body = node.get('body', [])
         return self.analyse_program(body, states, vulnerabilities)
-    
-    def _handle_augassign(self, node: dict, states: list[ExecutionState], vulnerabilities: Vulnerabilities) -> list[ExecutionState]:
-        """
-        Handle annotated assignment statements for ALL execution states.
-        e.g., z += a
-        """
-        target_node = node.get('target', {})
-        op_node = node.get('op', {})
-        value_node = node.get('value', {})
-        binop_node = {
-            "ast_type": "BinOp",
-            "left": target_node,
-            "op": op_node,
-            "right": value_node,
-            "lineno": 5,
-        }
-        assign_node = {
-            'ast_type': 'Assign',
-            'targets': [target_node],
-            'value': binop_node,
-            'lineno': node.get('lineno', 0)
-        }
-        
-        return self._handle_assign(assign_node, states, vulnerabilities)
-        
-    
-    def _handle_annassign(self, node: dict, states: list[ExecutionState], vulnerabilities: Vulnerabilities) -> list[ExecutionState]:
-        """
-        Handle annotated assignment statements for ALL execution states.
-        """
-        target_node = node.get('target', {})
-        value_node = node.get('value', {})
-        assign_node = {
-            'ast_type': 'Assign',
-            'targets': [target_node],
-            'value': value_node,
-            'lineno': node.get('lineno', 0)
-        }
-        
-        return self._handle_assign(assign_node, states, vulnerabilities)
     
     def _handle_assign(self, node: dict, states: list[ExecutionState], vulnerabilities: Vulnerabilities) -> list[ExecutionState]:
         """
@@ -118,7 +76,6 @@ class TracesTraversal:
 
         targets = node.get('targets', [])
         line_number = node.get('lineno', 0)
-        col_number = node.get('col_offset', 0)
 
         handlers = {
             'Name': self._handle_assign_name,
@@ -158,11 +115,11 @@ class TracesTraversal:
             # check if target is a sink (e.g., assigning to a sensitive variable)
             explicit_illegal_flows_ml = state.policy.detect_illegal_flows(target_name, ml)
             if explicit_illegal_flows_ml.vulnerabilities: # BEFORE: if illegal.is_tainted(): -> But we want all!
-                vulnerabilities.add_vulnerability(target_name, line_number, col_number, state.scope_level, explicit_illegal_flows_ml, flow_type="explicit")
+                vulnerabilities.add_vulnerability(target_name, line_number, explicit_illegal_flows_ml, flow_type="explicit")
 
             implicit_illegal_flows_ml = state.policy.detect_illegal_flows(target_name, ml_pc)
             if implicit_illegal_flows_ml.vulnerabilities:
-                vulnerabilities.add_vulnerability(target_name, line_number, col_number, state.scope_level, implicit_illegal_flows_ml, flow_type="implicit")
+                vulnerabilities.add_vulnerability(target_name, line_number, implicit_illegal_flows_ml, flow_type="implicit")
 
             # update the target's label
             state.multilabelling.update_multilabel(target_name, ml)
@@ -254,7 +211,7 @@ class TracesTraversal:
         # for each existing state, create two branches
         for state in states:
             print(80 * "-" + f'\n[DEBUG] Processing state:\n{state}\n' + 80 * '-')
-            state.scope_level += 1
+
             # NEW: PC propagation
             cond_label = self._evaluate_expression(test_node, state, vulnerabilities, context="condition")
             cond_pc_label = self._evaluate_expression(test_node, state, vulnerabilities, context="pc")
@@ -275,7 +232,6 @@ class TracesTraversal:
             # POP PC after both branches
             for s in new_states:
                 s.pop_pc()
-                s.scope_level -= 1
             state.pop_pc()
 
         print(f'\n[DEBUG] After If: Number of output states: {len(new_states)}')
@@ -304,7 +260,6 @@ class TracesTraversal:
             print(80 * '-' + f'\n[DEBUG] Processing input state:\n{state}\n' + 80 * '-')
 
             entry_state = state.copy()
-            # entry_state.scope_level += 1
             seen_states = []
             num_iterations = 0
 
@@ -400,7 +355,6 @@ class TracesTraversal:
             print(80 * '-' + f'\n[DEBUG] Processing input state:\n{state}\n' + 80 * '-')
 
             entry_state = state.copy()
-            entry_state.scope_level += 1
             seen_states = []
             num_iterations = 0
 
@@ -458,7 +412,6 @@ class TracesTraversal:
                 new_states_found = False
                 for state_path in iteration_states:
                     final_state = state_path[-1]
-                    final_state.scope_level -= 1
                     new_states.append(final_state)
 
                     is_new = all(final_state != seen for seen in seen_states)
@@ -529,7 +482,6 @@ class TracesTraversal:
         """
         var_name = node.get('id', '')
         line_number = node.get('lineno', 0)
-        col_number = node.get('col_offset', 0)
         
         ml = MultiLabel(state.policy.patterns)
             
@@ -543,7 +495,7 @@ class TracesTraversal:
             elif context == "condition":
                 # variable used in a condition -> implicit flow
                 state.policy.add_source_to_all_implicit_patterns(var_name)
-            ml.add_source(var_name, line_number, col_number, state.scope_level)
+            ml.add_source(var_name, line_number)
 
             return ml
         
@@ -555,7 +507,7 @@ class TracesTraversal:
         # check if the variable name itself is a source
         patterns_with_source = state.policy.get_vulnerabilities_by_source(var_name)
         if patterns_with_source:
-            ml.add_source(var_name, line_number, col_number, state.scope_level)
+            ml.add_source(var_name, line_number)
 
         # get the current taint of this variable
         if not state.multilabelling.get_multilabel(var_name):
@@ -577,7 +529,6 @@ class TracesTraversal:
         value_node = node.get('value', {})
         attr_name = node.get('attr', '')
         line_number = node.get('lineno', 0)
-        col_number = node.get('col_offset', 0)
         
         ml = MultiLabel(state.policy.patterns)
         
@@ -589,7 +540,7 @@ class TracesTraversal:
         if context == "value":
             patterns_with_source = state.policy.get_vulnerabilities_by_source(attr_name)
             if patterns_with_source:
-                ml.add_source(attr_name, line_number, col_number, state.scope_level)
+                ml.add_source(attr_name, line_number)
         
             # check if the attribute has a stored label
             attr_label = state.multilabelling.get_multilabel(attr_name)
@@ -608,7 +559,6 @@ class TracesTraversal:
         value_node = node.get('value', {})
         slice_node = node.get('slice', {})
         line_number = node.get('lineno', 0)
-        col_number = node.get('col_offset', 0)
         
         ml = MultiLabel(state.policy.patterns)
 
@@ -626,7 +576,7 @@ class TracesTraversal:
             if patterns_with_sink:
                 illegal = state.policy.detect_illegal_flows(container_name, ml)
                 if illegal.vulnerabilities:
-                    vulnerabilities.add_vulnerability(container_name, line_number, col_number, state.scope_level, illegal)
+                    vulnerabilities.add_vulnerability(container_name, line_number, illegal)
         
         return ml
     
@@ -664,7 +614,6 @@ class TracesTraversal:
         func_node = node.get('func', {})
         args = node.get('args', [])
         line_number = node.get('lineno', 0)
-        col_number = node.get('col_offset', 0)
         
         ml = MultiLabel(state.policy.patterns)
         ml_pc = MultiLabel(state.policy.patterns)
@@ -673,7 +622,7 @@ class TracesTraversal:
         base_name, func_name = self._extract_function_names(func_node)
         if base_name and (base_name not in state.initialized_vars):
             state.policy.add_source_to_all_patterns(base_name)
-            ml.add_source(base_name, line_number, col_number, state.scope_level)
+            ml.add_source(base_name, line_number)
             state.initialized_vars.add(base_name)
             
         # evaluate all arguments and combine their labels
@@ -689,7 +638,7 @@ class TracesTraversal:
         # check if the function itself is a source
         patterns_with_source = state.policy.get_vulnerabilities_by_source(func_name)
         if patterns_with_source:
-            ml.add_source(func_name, line_number, col_number, state.scope_level)
+            ml.add_source(func_name, line_number)
             
         # check if the function is a sanitizer
         patterns_with_sanitizer = state.policy.get_vulnerabilities_by_sanitizer(func_name)
@@ -700,11 +649,11 @@ class TracesTraversal:
         # check if the function is a sink
         explicit_illegal = state.policy.detect_illegal_flows(func_name, ml)
         if explicit_illegal.vulnerabilities:
-            vulnerabilities.add_vulnerability(func_name, line_number, col_number, state.scope_level, explicit_illegal, flow_type="explicit")
+            vulnerabilities.add_vulnerability(func_name, line_number, explicit_illegal, flow_type="explicit")
 
         implicit_illegal = state.policy.detect_illegal_flows(func_name, ml_pc)
         if implicit_illegal.vulnerabilities:
-            vulnerabilities.add_vulnerability(func_name, line_number, col_number, state.scope_level, implicit_illegal, flow_type="implicit")
+            vulnerabilities.add_vulnerability(func_name, line_number, implicit_illegal, flow_type="implicit")
 
         return ml_pc if context == "pc" else ml
     

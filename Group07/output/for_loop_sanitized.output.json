@@ -3,13 +3,11 @@
         "vulnerability": "Input Processing_1",
         "source": [
             "get_inputs",
-            4,
-            9
+            4
         ],
         "sink": [
             "process",
-            7,
-            4
+            7
         ],
         "flows": [
             [

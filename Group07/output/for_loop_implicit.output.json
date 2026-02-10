@@ -3,13 +3,11 @@
         "vulnerability": "Secret Leak_1",
         "source": [
             "get_secret",
-            4,
-            9
+            4
         ],
         "sink": [
             "log",
-            7,
-            4
+            7
         ],
         "flows": [
             [
