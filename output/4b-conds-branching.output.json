@@ -59,23 +59,6 @@
         "vulnerability": "C_3",
         "source": [
             "d",
-            7
-        ],
-        "sink": [
-            "e",
-            7
-        ],
-        "flows": [
-            [
-                "explicit",
-                []
-            ]
-        ]
-    },
-    {
-        "vulnerability": "C_4",
-        "source": [
-            "d",
             6
         ],
         "sink": [
@@ -91,6 +74,23 @@
                         6
                     ]
                 ]
+            ]
+        ]
+    },
+    {
+        "vulnerability": "C_4",
+        "source": [
+            "d",
+            7
+        ],
+        "sink": [
+            "e",
+            7
+        ],
+        "flows": [
+            [
+                "explicit",
+                []
             ]
         ]
     },
