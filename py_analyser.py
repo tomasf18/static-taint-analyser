@@ -6,8 +6,8 @@ from tool.pattern import Pattern
 from tool.multilabelling import MultiLabelling
 from tool.policy import Policy
 from tool.vulnerabilities import Vulnerabilities
-from traces import TracesTraversal
-from ast_utils import ASTUtils
+from tool.traces import TracesTraversal
+from tool.ast_utils import ASTUtils
 from tool.execution_state import ExecutionState
 
 def process_json_file(filepath):

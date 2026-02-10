@@ -60,8 +60,8 @@ def run_validation_test(test_name, slice_path, output_path):
 def main():
     """Main function to run all tests"""
     base_dir = Path(__file__).parent
-    slices_dir = base_dir / "slices"
-    output_dir = base_dir / "output"
+    slices_dir = base_dir / ".." / "slices"
+    output_dir = base_dir / ".." / "output"
     
     # Find all .py files in slices directories (these are the analysis targets)
     py_files = []
